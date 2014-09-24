@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="testApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript">
+		var testApp = angular.module('testApp', []);
+		testApp.controller('testCtrl', function($scope){
+			$scope.name = "helen";
+			$scope.age = "20";
+		});
+	</script>
+</head>
+<body ng-controller="testCtrl">
+	Name:<input ng-model="name" type="text"/><br />
+	Age:<input ng-model="age" type="text" /><br />
+    Hello {{ name }}, your age is {{ age }} !
+</body>
+</html>

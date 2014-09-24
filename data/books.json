@@ -1,0 +1,7 @@
+[
+	{ "id": 1, "name": "Learning English", "qty": 1244 ,"price": "200", "img": "./img/learn-english.jpeg" },
+	{ "id": 2, "name": "Piano", "qty": 1559, "price": "700", "img": "./img/piano.jpeg" },
+	{ "id": 3, "name": "Music Book", "qty": 2650, "price": "150", "img": "./img/music.jpeg" },
+	{ "id": 4, "name": "Design Pattern", "qty": 4473, "price": "347", "img": "./img/book.jpeg" },
+	{ "id": 5, "name": "Marketing", "qty": 23, "price": "324", "img": "./img/marketing.jpeg" }
+]

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="testApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript" src="js/angular-route.min.js"></script>
+	<script type="text/javascript">
+		var testApp = angular.module('testApp', ['ngRoute']);
+		testApp.config(function($routeProvider){
+			$routeProvider.
+				when('/', {
+					templateUrl: 'tmp/book-list.html',
+					controller: 'bookListCtrl'
+				}).when('/:bookName', {
+					templateUrl: 'tmp/book-detail.html',
+					controller: 'bookDetailCtrl'
+				}).otherwise({
+					redirectTo: '/'
+				});
+		});
+
+		testApp.controller('bookListCtrl', [
+				'$scope', 
+				'$http', 
+				function(s, h){
+					h.get('./data/books.json').success(function(data){
+						s.books = data;
+					});
+				}
+			]
+		);
+		testApp.controller('bookDetailCtrl', [
+				'$scope', 
+				'$routeParams', 
+				function(s, r){
+					console.log(r);
+				}
+			]
+		);
+	</script>
+</head>
+<body>
+	<div ng-view></div>
+	
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="testApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript">
+		var testApp = angular.module('testApp', []);
+		testApp.controller('testCtrl', [
+				'$scope', 
+				'$http', 
+				function(s, h){
+					h.get('./data/books.json').success(function(data){
+						s.books = data;
+					});
+				}
+			]
+		);
+	</script>
+</head>
+<body ng-controller="testCtrl">
+	Search: <input type="text" ng-model="search" />
+	<br />
+	<p>Order by asc</p>
+	<div>
+		<table>
+			<tr>
+				<td>Name</td>
+				<td>Price</td>
+			</tr>
+			<tr ng-repeat="book in books | filter:search | orderBy: 'price'">
+				<td>{{ book.name }}</td>
+				<td>{{ book.price }}</td>
+			</tr>
+		</table>
+	</div>
+	<hr />
+	<p>Order by descending</p>
+	<div>
+		<table>
+			<tr>
+				<td>Name</td>
+				<td>Price</td>
+			</tr>
+			<tr ng-repeat="book in books | filter:search | orderBy: '-price'">
+				<td>{{ book.name }}</td>
+				<td>{{ book.price }}</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

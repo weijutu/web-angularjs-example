@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="testApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript">
+		var testApp = angular.module('testApp', []);
+		testApp.controller('testCtrl', [
+				'$scope', 
+				'$http', 
+				function(s, h){
+					h.get('./data/books.json').success(function(data){
+						s.books = data;
+					});
+				}
+			]
+		);
+	</script>
+</head>
+<body ng-controller="testCtrl">
+	<!-- table component -->
+	<div>
+		<table>
+			<tr>
+				<td>Name</td>
+				<td>Price</td>
+			</tr>
+			<tr ng-repeat="book in books">
+				<td>{{ book.name }}</td>
+				<td>{{ book.price }}</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

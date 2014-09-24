@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="testApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript">
+		var testApp = angular.module('testApp', []);
+		testApp.controller('testCtrl', [
+				'$scope', 
+				'$http', 
+				function(s, h){
+					h.get('./data/books.json').success(function(data){
+						s.books = data;
+					});
+					s.sortField = 'price';
+					s.reverse = true;
+				}
+			]
+		);
+	</script>
+</head>
+<body ng-controller="testCtrl">
+	Search: <input type="text" ng-model="search" />
+	<br />
+	<p>Order by asc</p>
+	<div>
+		<table>
+			<tr>
+				<td><a href="" ng-click="sortField='name';reverse=!reverse">Name</a></td>
+				<td><a href="" ng-click="sortField='price';reverse=!reverse">Price</a></td>
+			</tr>
+			<tr ng-repeat="book in books | filter:search | orderBy:sortField:reverse">
+				<td>{{ book.name }}</td>
+				<td>{{ book.price }}</td>
+			</tr>
+		</table>
+	</div>
+	<hr />
+</body>
+</html>

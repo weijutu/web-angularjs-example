@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="testApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript">
+		var testApp = angular.module('testApp', []);
+		testApp.controller('testCtrl', function($scope){
+			$scope.books = [
+				{ "name": "Learning English", "price": "200" },
+				{ "name": "Piano", "price": "700" },
+				{ "name": "Music Book", "price": "150" },
+				{ "name": "Design Pattern", "price": "347" },
+				{ "name": "Marketing", "price": "324" }
+			];
+		});
+	</script>
+</head>
+<body ng-controller="testCtrl">
+	<div>
+		<!-- ul li component -->
+		<ul>
+			<li ng-repeat="book in books">
+				Name : {{ book.name }} - Price : 
+				{{ book.price }}
+			</li>
+		</ul>
+	</div>
+	<!-- table component -->
+	<div>
+		<table>
+			<tr>
+				<td>Name</td>
+				<td>Price</td>
+			</tr>
+			<tr ng-repeat="book in books">
+				<td>{{ book.name }}</td>
+				<td>{{ book.price }}</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

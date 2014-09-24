@@ -1,0 +1,58 @@
+<!--
+An additional script tag has been added for angular-route, which defines the ngRoute module.
+The ngRoute module was added as a dependency to countryApp, which provides the $routeProvider API.
+The config() call sets up the routes using inline strings as templates.
+A placeholder CountryDetailCtrl was added.
+A div with the ng-view directive was added to the body. This is where the route provider injects content rendered from the template associated with the current route.
+-->
+<!DOCTYPE html>
+<html lang="en" ng-app="testApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript" src="js/angular-route.min.js"></script>
+	<script type="text/javascript">
+		var testApp = angular.module('testApp', ['ngRoute']);
+		testApp.config(function($routeProvider){
+			$routeProvider.
+				when('/', {
+					template: '<ul><li ng-repeat="book in books">{{ book.name }}</li></ul>',
+					controller: 'bookListCtrl'
+				}).when('/:bookName', {
+					template: '<h1>TODO create country detail view</h1>',
+					controller: 'bookDetailCtrl'
+				}).otherwise({
+					redirectTo: '/'
+				});
+		});
+
+		testApp.controller('bookListCtrl', [
+				'$scope', 
+				'$http', 
+				function(s, h){
+					h.get('./data/books.json').success(function(data){
+						s.books = data;
+					});
+					s.sortField = 'price';
+					s.reverse = true;
+				}
+			]
+		);黃威縉
+		testApp.controller('bookDetailCtrl', [
+				'$scope', 
+				'$routeParams', 
+				function(s, r){
+					console.log(r);
+					s.sortField = 'price';
+					s.reverse = true;
+				}
+			]
+		);
+	</script>
+</head>
+<body>
+	<div ng-view></div>
+	
+</body>
+</html>

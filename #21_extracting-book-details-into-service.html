@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="testApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript" src="js/angular-route.min.js"></script>
+	<script type="text/javascript">
+		var testApp = angular.module('testApp', ['ngRoute']);
+		testApp.config(function($routeProvider){
+			$routeProvider.
+				when('/', {
+					templateUrl: 'tmp/book-list-anchor.html',
+					controller: 'bookListCtrl'
+				}).when('/:bookName', {
+					templateUrl: 'tmp/book-detail-object.html',
+					controller: 'bookDetailCtrl'
+				}).otherwise({
+					redirectTo: '/'
+				});
+		});
+
+		testApp.factory('booksFactory', function($http){
+			return {
+				list: function(callback) {
+					$http.get('./data/books.json').success(callback);
+				},
+				find: function(name, callback) {
+					$http.get('./data/books.json').success(function(data){
+						var book = data.filter(function(entry){
+							return entry.name === name;
+						})[0];
+						callback(book);
+					});
+				}
+			};
+		});
+
+		testApp.controller('bookListCtrl', [
+				'$scope', 
+				'booksFactory', 
+				function(s, f){
+					f.list(function(booksFactory) {
+						s.books = booksFactory;
+					});
+				}
+			]
+		);
+		testApp.controller('bookDetailCtrl', function ($scope, $routeParams, booksFactory){
+
+			booksFactory.find($routeParams.bookName, function(book){
+				console.log(book);
+				$scope.bookobj = book;
+			});
+	    });
+		
+	</script>
+</head>
+<body>
+	<div ng-view></div>
+	
+</body>
+</html>
